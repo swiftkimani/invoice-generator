@@ -1,0 +1,136 @@
+/* styles/global.css */
+@import "tailwindcss";
+
+:root {
+    --background: #ffffff;
+    --foreground: #171717;
+}
+
+/* Light theme (default) */
+:root, :root.light, .light {
+    --background: #ffffff;
+    --foreground: #171717;
+    --primary: rgb(249 115 22);
+    --primary-hover: rgb(234 88 12);
+    --border: rgb(209 213 219);
+    --secondary-hover: rgb(249 250 251);
+    --scrollbar-track: rgb(243 244 246);
+    --scrollbar-thumb: rgb(251 146 60);
+    --scrollbar-thumb-hover: rgb(249 115 22);
+}
+
+/* Dark theme */
+:root.dark, .dark {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+    --primary: rgb(249 115 22);
+    --primary-hover: rgb(234 88 12);
+    --border: rgb(55 65 81);
+    --secondary-hover: rgb(31 41 55);
+    --scrollbar-track: rgb(17 24 39);
+    --scrollbar-thumb: rgb(251 146 60);
+    --scrollbar-thumb-hover: rgb(249 115 22);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Custom styles for Huduma Bill */
+@layer components {
+    .btn-primary {
+        background: var(--primary);
+        color: white;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.15s ease;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+        border: 1px solid var(--border);
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+        border-radius: 0.5rem;
+        transition: background-color 0.15s ease;
+        background: transparent;
+        color: var(--foreground);
+        cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+        background: var(--secondary-hover);
+    }
+
+    .input-field {
+        width: 100%;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        border: 1px solid var(--border);
+        border-radius: 0.5rem;
+        background: var(--background);
+        color: var(--foreground);
+        transition: border-color 0.15s ease;
+    }
+
+    .input-field:focus {
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(249, 115, 22, 0.1);
+    }
+
+    .card {
+        background: var(--background);
+        border: 1px solid var(--border);
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* Smooth transitions for theme switching */
+* {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
