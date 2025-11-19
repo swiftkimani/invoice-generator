@@ -37,7 +37,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'create' | 'preview' | 'dashboard'>('create');
   const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
-  const invoiceRef = useRef<HTMLDivElement>(null);
+  const invoiceRef = useRef<HTMLDivElement>(null); // Remove null from the type
   const invoiceNumber = useInvoiceNumber();
 
   // Fixed: useCallback to prevent infinite re-renders

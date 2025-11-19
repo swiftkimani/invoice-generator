@@ -1,132 +1,139 @@
-// app/components/InvoicePreview.tsx
+// components/InvoicePreview.tsx
 'use client';
 
 type InvoiceData = {
-    invoiceNumber?: string;
+    invoiceNumber: string;
     businessName: string;
     businessPhone: string;
-    businessEmail?: string;
-    businessAddress?: string;
+    businessEmail: string;
+    businessAddress: string;
     clientName: string;
     clientPhone: string;
-    clientEmail?: string;
-    clientAddress?: string;
+    clientEmail: string;
+    clientAddress: string;
     serviceDescription: string;
     amount: string;
     discount: string;
     taxEnabled: boolean;
+    taxRate: number;
     paymentMethod: 'mpesa' | 'cash' | 'bank';
     date: string;
-    dueDate?: string;
-    notes?: string;
+    dueDate: string;
+    notes: string;
 };
 
-export default function InvoicePreview({ data }: { data: InvoiceData | null }) {
-    // Handle null data case
+type InvoicePreviewProps = {
+    data: InvoiceData | null;
+    template?: any;
+};
+
+export default function InvoicePreview({ data, template }: InvoicePreviewProps) {
     if (!data) {
         return (
-            <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-white/10">
-                <div className="p-8 text-center">
-                    <p className="text-gray-500 dark:text-gray-400">
-                        No invoice data available. Please fill out the form to see a preview.
-                    </p>
-                </div>
+            <div className="text-center text-gray-500 py-8">
+                No invoice data available
             </div>
         );
     }
 
-    const amount = Number(data.amount) || 0;
-    const discount = Number(data.discount) || 0;
+    // Calculate totals
+    const amount = parseFloat(data.amount) || 0;
+    const discount = parseFloat(data.discount) || 0;
     const subtotal = amount - discount;
-    const vat = data.taxEnabled ? subtotal * 0.16 : 0;
-    const total = subtotal + vat;
-
-    // Native date formatting
-    const formatDate = (dateStr: string) => {
-        if (!dateStr) return '—';
-        const date = new Date(dateStr);
-        const options: Intl.DateTimeFormatOptions = {
-            day: '2-digit',
-            month: 'short',
-            year: 'numeric'
-        };
-        return date.toLocaleDateString('en-KE', options);
-    };
-
-    const formatCurrency = (value: number) =>
-        new Intl.NumberFormat('en-KE', {
-            style: 'currency',
-            currency: 'KES',
-            minimumFractionDigits: 0
-        }).format(value);
-
-    const paymentIcons: Record<string, string> = {
-        mpesa: 'M-Pesa',
-        cash: 'Cash',
-        bank: 'Bank Transfer',
-    };
+    const tax = data.taxEnabled ? subtotal * (data.taxRate / 100) : 0;
+    const total = subtotal + tax;
 
     return (
-        <div className="max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-2xl overflow-hidden border border-gray-200 dark:border-white/10">
-            {/* Gradient Header */}
-            <div className="bg-gradient-to-r from-orange-500 to-pink-600 p-8 text-white">
-                <div className="flex justify-between items-start">
-                    <div>
-                        <h1 className="text-4xl font-bold tracking-tight">INVOICE</h1>
-                        <p className="text-orange-100 mt-2 text-lg">Professional Service Invoice</p>
-                        {data.invoiceNumber && (
-                            <p className="text-orange-200 mt-1 font-mono">#{data.invoiceNumber}</p>
-                        )}
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
+            {/* Header */}
+            <div className="flex justify-between items-start mb-8">
+                <div>
+                    <h1 className="text-3xl font-bold text-gray-800">INVOICE</h1>
+                    <p className="text-gray-600">#{data.invoiceNumber}</p>
+                </div>
+                <div className="text-right">
+                    <h2 className="text-2xl font-semibold text-gray-800">{data.businessName}</h2>
+                    <p className="text-gray-600">{data.businessPhone}</p>
+                    <p className="text-gray-600">{data.businessEmail}</p>
+                    <p className="text-gray-600">{data.businessAddress}</p>
+                </div>
+            </div>
+
+            {/* Client & Date Info */}
+            <div className="grid grid-cols-2 gap-8 mb-8">
+                <div>
+                    <h3 className="font-semibold text-gray-700 mb-2">Bill To:</h3>
+                    <p className="text-gray-600">{data.clientName}</p>
+                    <p className="text-gray-600">{data.clientPhone}</p>
+                    <p className="text-gray-600">{data.clientEmail}</p>
+                    <p className="text-gray-600">{data.clientAddress}</p>
+                </div>
+                <div className="text-right">
+                    <div className="mb-4">
+                        <span className="font-semibold text-gray-700">Date: </span>
+                        <span className="text-gray-600">{data.date}</span>
                     </div>
-                    <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-5xl font-black shadow-lg">
-                        K
+                    <div>
+                        <span className="font-semibold text-gray-700">Due Date: </span>
+                        <span className="text-gray-600">{data.dueDate}</span>
                     </div>
                 </div>
             </div>
 
-            <div className="p-8 space-y-8">
-                {/* From / Bill To */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <h3 className="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider">From</h3>
-                        <div className="mt-3">
-                            <p className="text-xl font-bold text-gray-900 dark:text-white">
-                                {data.businessName || 'Your Business Name'}
-                            </p>
-                            {data.businessPhone && (
-                                <p className="text-gray-600 dark:text-gray-400 mt-1">Phone: {data.businessPhone}</p>
-                            )}
-                            {data.businessEmail && (
-                                <p className="text-gray-600 dark:text-gray-400">Email: {data.businessEmail}</p>
-                            )}
-                            {data.businessAddress && (
-                                <p className="text-gray-600 dark:text-gray-400 mt-1">{data.businessAddress}</p>
-                            )}
-                        </div>
-                    </div>
-
-                    <div className="text-right">
-                        <h3 className="text-xs font-bold text-pink-600 dark:text-pink-400 uppercase tracking-wider">Bill To</h3>
-                        <div className="mt-3">
-                            <p className="text-xl font-bold text-gray-900 dark:text-white">
-                                {data.clientName || 'Client Name'}
-                            </p>
-                            {data.clientPhone && (
-                                <p className="text-gray-600 dark:text-gray-400 mt-1">Phone: {data.clientPhone}</p>
-                            )}
-                            {data.clientEmail && (
-                                <p className="text-gray-600 dark:text-gray-400">Email: {data.clientEmail}</p>
-                            )}
-                            {data.clientAddress && (
-                                <p className="text-gray-600 dark:text-gray-400 mt-1">{data.clientAddress}</p>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                {/* Rest of your existing InvoicePreview JSX remains the same */}
-                {/* ... */}
+            {/* Service Details */}
+            <div className="mb-8">
+                <h3 className="font-semibold text-gray-700 mb-4">Service Description</h3>
+                <p className="text-gray-600 bg-gray-50 p-4 rounded">{data.serviceDescription}</p>
             </div>
+
+            {/* Amount Breakdown */}
+            <div className="border-t border-b border-gray-200 py-4 mb-6">
+                <div className="flex justify-between mb-2">
+                    <span className="text-gray-600">Amount:</span>
+                    <span className="text-gray-800">KSh {amount.toLocaleString()}</span>
+                </div>
+                {discount > 0 && (
+                    <div className="flex justify-between mb-2">
+                        <span className="text-gray-600">Discount:</span>
+                        <span className="text-red-600">-KSh {discount.toLocaleString()}</span>
+                    </div>
+                )}
+                <div className="flex justify-between mb-2">
+                    <span className="text-gray-600">Subtotal:</span>
+                    <span className="text-gray-800">KSh {subtotal.toLocaleString()}</span>
+                </div>
+                {data.taxEnabled && (
+                    <div className="flex justify-between mb-2">
+                        <span className="text-gray-600">Tax ({data.taxRate}%):</span>
+                        <span className="text-gray-800">KSh {tax.toLocaleString()}</span>
+                    </div>
+                )}
+                <div className="flex justify-between font-bold text-lg mt-4 pt-4 border-t border-gray-200">
+                    <span>Total:</span>
+                    <span>KSh {total.toLocaleString()}</span>
+                </div>
+            </div>
+
+            {/* Payment Method & Notes */}
+            <div className="grid grid-cols-2 gap-8 text-sm">
+                <div>
+                    <span className="font-semibold text-gray-700">Payment Method: </span>
+                    <span className="text-gray-600 capitalize">{data.paymentMethod}</span>
+                </div>
+                {data.notes && (
+                    <div>
+                        <span className="font-semibold text-gray-700">Notes: </span>
+                        <span className="text-gray-600">{data.notes}</span>
+                    </div>
+                )}
+            </div>
+
+            {/* Template indicator */}
+            {template && (
+                <div className="mt-6 text-xs text-gray-400 text-center">
+                    Template: {template.name || 'Custom'}
+                </div>
+            )}
         </div>
     );
 }

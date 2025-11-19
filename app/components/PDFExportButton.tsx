@@ -1,29 +1,57 @@
-// app/components/PDFExportButton.tsx
+// components/PDFExportButton.tsx
 'use client';
-// import { useRef } from 'react';
+
+import { useRef } from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-export default function PDFExportButton({ invoiceRef }: { invoiceRef: React.RefObject<HTMLDivElement> }) {
+interface PDFExportButtonProps {
+    invoiceRef: React.RefObject<HTMLDivElement | null>; // Add null here
+}
+
+export default function PDFExportButton({ invoiceRef }: PDFExportButtonProps) {
     const generatePDF = async () => {
-        if (!invoiceRef.current) return;
+        if (!invoiceRef.current) {
+            console.error('Invoice ref is null');
+            return;
+        }
 
-        const canvas = await html2canvas(invoiceRef.current, { scale: 2 });
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+        try {
+            const canvas = await html2canvas(invoiceRef.current, {
+                scale: 2,
+                useCORS: true,
+            });
 
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save(`invoice-${Date.now()}.pdf`);
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const imgWidth = 210; // A4 width in mm
+            const pageHeight = 295; // A4 height in mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+            let heightLeft = imgHeight;
+            let position = 0;
+
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+
+            while (heightLeft >= 0) {
+                position = heightLeft - imgHeight;
+                pdf.addPage();
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+            }
+
+            pdf.save('invoice.pdf');
+        } catch (error) {
+            console.error('Error generating PDF:', error);
+        }
     };
 
     return (
         <button
             onClick={generatePDF}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+            className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors"
         >
-            Download PDF
+            Export PDF
         </button>
     );
 }

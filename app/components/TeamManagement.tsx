@@ -1,5 +1,6 @@
 // components/TeamManagement.tsx
 'use client';
+import { useState } from 'react';
 
 interface TeamMember {
     id: string;
