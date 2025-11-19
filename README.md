@@ -5,140 +5,122 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC)
 
-A modern, responsive invoice generator specifically designed for Kenyan businesses. Create professional invoices with M-Pesa integration, real-time previews, and PDF export capabilities.
+A modern, responsive invoice generator tailored for Kenyan businesses. Create professional invoices with M-Pesa integration, live previews, and PDF export.
+
+---
 
 ## ✨ Features
 
-### 🎯 Core Features
-- **Real-time Invoice Creation** - See changes instantly as you type
-- **Professional Templates** - Multiple invoice templates to choose from
-- **PDF Export** - Download invoices as professional PDF documents
-- **M-Pesa Integration** - Built-in M-Pesa payment instructions
-- **Tax Calculations** - Automatic VAT (16%) calculations for Kenya
-- **Dark/Light Mode** - Toggle between dark and light themes
+### Core Features
 
-### 💼 Business Features
-- **Client Management** - Save and manage client information
-- **Service Catalog** - Quick access to frequently used services
-- **Invoice Numbering** - Automatic invoice numbering system
-- **Payment Tracking** - Track payment status (Pending, Paid, Failed)
-- **Multi-currency** - Kenyan Shilling (KES) support
+* **Real-time Invoice Creation** – Updates as you type.
+* **Professional Templates** – Multiple invoice templates.
+* **PDF Export** – Download invoices as PDF documents.
+* **M-Pesa Integration** – Built-in payment instructions.
+* **Automatic VAT** – 16% tax calculations for Kenya.
+* **Dark/Light Mode** – Toggle themes.
 
-### 📱 User Experience
-- **Responsive Design** - Works perfectly on desktop, tablet, and mobile
-- **Live Preview** - Real-time invoice preview as you fill the form
-- **Intuitive Interface** - Clean, modern, and easy-to-use design
-- **Fast Performance** - Built with Next.js 16 and Turbopack
+### Business Features
+
+* **Client Management** – Save and manage client data.
+* **Service Catalog** – Quick access to services.
+* **Invoice Numbering** – Automatic numbering system.
+* **Payment Tracking** – Track Pending, Paid, or Failed invoices.
+* **Multi-currency** – Kenyan Shilling (KES) support.
+
+### User Experience
+
+* **Responsive Design** – Optimized for desktop, tablet, and mobile.
+* **Live Preview** – Real-time invoice preview.
+* **Intuitive Interface** – Clean and easy-to-use design.
+* **Fast Performance** – Built with Next.js 16 and Turbopack.
+
+---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18.17 or later
-- npm, yarn, or pnpm
+
+* Node.js 18.17 or later
+* npm, yarn, or pnpm
 
 ### Installation
 
 1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/huduma-bill.git
-   cd huduma-bill
 
+```bash
+git clone https://github.com/your-username/huduma-bill.git
+cd huduma-bill
+```
 
-Install dependencies
-bash
+2. **Install dependencies**
 
+```bash
 npm install
 # or
 yarn install
 # or
 pnpm install
+```
 
-Run the development server
-bash
+3. **Run the development server**
 
+```bash
 npm run dev
 # or
 yarn dev
 # or
 pnpm dev
+```
 
-    Open your browser
-    Navigate to http://localhost:3000
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Building for Production
-bash
+### Building for Production
 
+```bash
 npm run build
 npm start
+```
 
-📋 Usage Guide
-Creating Your First Invoice
+---
 
-    Fill Business Information
+## 📋 Usage Guide
 
-        Enter your business name, phone, email, and address
+### Creating Your First Invoice
 
-        This information will appear on all your invoices
+1. **Business Information** – Enter your business name, phone, email, and address.
+2. **Client Details** – Enter client information or select a saved client.
+3. **Services** – Add service description, amount, discounts, and VAT.
+4. **Payment Method** – Choose M-Pesa, Cash, or Bank Transfer.
+5. **Preview & Download** – Switch to Preview tab and click "Download PDF".
 
-    Add Client Details
+### Managing Clients
 
-        Enter client name and contact information
+* Use Client Manager to save, edit, or auto-fill client details.
 
-        Use the Client Manager to save frequent clients
+### Payment Tracking
 
-    Describe Services
+* Mark invoices as Paid, Pending, or Failed.
+* Track payment status in real-time.
+* Send payment reminders.
 
-        Add service description and amount
+---
 
-        Apply discounts and include VAT as needed
+## 🛠 Technology Stack
 
-    Choose Payment Method
+* **Framework**: Next.js 16 with App Router
+* **Language**: TypeScript
+* **Styling**: Tailwind CSS
+* **UI Components**: Custom components with Framer Motion
+* **PDF Generation**: jsPDF + html2canvas
+* **Icons**: Lucide React
+* **State Management**: React Hooks (useState, useEffect)
 
-        Select M-Pesa, Cash, or Bank Transfer
+---
 
-        M-Pesa includes automatic payment instructions
+## 📁 Project Structure
 
-    Preview & Download
-
-        Switch to Preview tab to see the final invoice
-
-        Click "Download PDF" to export
-
-Managing Clients
-
-    Use the Client Manager in the sidebar
-
-    Save client information for quick access
-
-    Select saved clients to auto-fill forms
-
-Payment Tracking
-
-    Mark invoices as Paid, Pending, or Failed
-
-    Track payment status in real-time
-
-    Send payment reminders to clients
-
-🛠 Technology Stack
-
-    Framework: Next.js 16 with App Router
-
-    Language: TypeScript
-
-    Styling: Tailwind CSS
-
-    UI Components: Custom components with Framer Motion
-
-    PDF Generation: jsPDF + html2canvas
-
-    Icons: Lucide React
-
-    State Management: React Hooks (useState, useEffect)
-
-📁 Project Structure
-text
-
+```
 huduma-bill/
 ├── app/
 │   ├── components/
@@ -156,115 +138,90 @@ huduma-bill/
 ├── public/
 ├── package.json
 └── README.md
+```
 
-🎨 Customization
-Adding New Templates
+---
 
-    Edit TemplateSelector.tsx:
-    tsx
+## 🎨 Customization
 
+### Adding New Templates
+
+Edit `TemplateSelector.tsx`:
+
+```ts
 const templates = [
-{
-id: 'your-template',
-name: 'Your Template',
-colors: { primary: '#HEXCODE', secondary: '#HEXCODE' }
-}
+  { id: 'custom-template', name: 'Custom Template', colors: { primary: '#HEX', secondary: '#HEX' } }
 ];
+```
 
-    Update InvoicePreview.tsx to handle template styles
+Update `InvoicePreview.tsx` to apply template styles.
 
-Modifying Tax Rates
+### Modifying Tax Rates
 
-Edit the tax calculation in InvoicePreview.tsx:
-tsx
+Edit VAT calculation in `InvoicePreview.tsx`:
 
+```ts
 const vat = data.taxEnabled ? subtotal * 0.16 : 0; // Change 0.16 to your rate
+```
 
-Adding Payment Methods
+### Adding Payment Methods
 
-Update the payment methods in InvoiceForm.tsx:
-tsx
+Edit `InvoiceForm.tsx`:
 
+```ts
 <option value="new-method">New Payment Method</option>
+```
 
-🤝 Contributing
+---
 
-We welcome contributions! Please feel free to submit pull requests, report bugs, or suggest new features.
-Development Workflow
+## 🤝 Contributing
 
-    Fork the repository
+* Fork the repository
+* Create a feature branch (`git checkout -b feature/new-feature`)
+* Commit your changes (`git commit -m "Add new feature"`)
+* Push and open a Pull Request
 
-    Create a feature branch (git checkout -b feature/amazing-feature)
+**Code Standards**
 
-    Commit your changes (git commit -m 'Add amazing feature')
+* Use TypeScript
+* Follow React best practices
+* Ensure mobile responsiveness
+* Clean and commented code
 
-    Push to the branch (git push origin feature/amazing-feature)
+---
 
-    Open a Pull Request
+## 📄 License
 
-Code Standards
+MIT License – see the LICENSE file.
 
-    Use TypeScript for type safety
+---
 
-    Follow React best practices
+## 🙏 Acknowledgments
 
-    Use Tailwind CSS for styling
+* Built with Next.js
+* Styled with Tailwind CSS
+* Icons by Lucide
+* PDF generation with jsPDF
 
-    Ensure mobile responsiveness
+---
 
-    Write clean, commented code
+## 📞 Support
 
-📄 License
+* Email: [support@hudumabill.com](mailto:support@hudumabill.com)
+* Report a bug or request features via GitHub issues
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-🙏 Acknowledgments
+---
 
-    Built with Next.js
+## 🔄 Changelog
 
-    Styled with Tailwind CSS
+**v1.0.0**
 
-    Icons by Lucide
+* Initial release
+* Basic invoice creation
+* PDF export
+* M-Pesa integration
+* Client management
 
-    PDF generation with jsPDF
+---
 
-📞 Support
-
-If you need help or have questions:
-
-    📧 Email: support@hudumabill.com
-
-    🐛 Report a Bug
-
-    💡 Request a Feature
-
-🔄 Changelog
-v1.0.0 (Current)
-
-    Initial release
-
-    Basic invoice creation
-
-    PDF export functionality
-
-    M-Pesa integration
-
-    Client management
-
-Made with ❤️ for Kenyan Businesses
-
-Streamlining invoicing and payments across Kenya
-text
-
-
-This README.md file provides:
-
-1. **Comprehensive overview** of the project
-2. **Clear installation instructions**
-3. **Detailed usage guide** with step-by-step instructions
-4. **Technical documentation** for developers
-5. **Customization guidelines**
-6. **Contribution guidelines**
-7. **Professional branding** with badges and structure
-
-You can copy this directly into a `README.md` file in your project root. The file includes everything users and developers need to understand, install, and use your invoice generator application.
-
+Made with ❤️ for Kenyan Businesses. Streamlining invoicing and payments across Kenya.
