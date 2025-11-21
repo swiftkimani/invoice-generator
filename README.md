@@ -16,7 +16,7 @@ A modern, responsive invoice generator tailored for Kenyan businesses. Create pr
 * **Real-time Invoice Creation** – Updates as you type.
 * **Professional Templates** – Multiple invoice templates.
 * **PDF Export** – Download invoices as PDF documents.
-* **M-Pesa Integration** – Built-in payment instructions.
+* **M-Pesa  Integration** – Built-in payment instructions.
 * **Automatic VAT** – 16% tax calculations for Kenya.
 * **Dark/Light Mode** – Toggle themes.
 
